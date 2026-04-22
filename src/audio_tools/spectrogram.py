@@ -54,10 +54,10 @@ class Spectrogram:
         self.t_frames = np.arange(self.last_frame_index())
 
         if self.sr:
-            self.f_bins = np.arange(self.nfft) / self.nfft * self.sr / 2
+            self.f_bins = np.arange(self.nfft) / self.nfft
             if self.real:
                 self.f_bins = self.f_bins[:self.nfft // 2 + 1]
-            self.t_frames = np.arange(self.last_frame_index()) * self.hop_size_s
+            self.t_frames = np.arange(self.last_frame_index() + 1) * self.hop_size_s
 
         self.f = self.f_bins.size
         self.t = self.t_frames.size

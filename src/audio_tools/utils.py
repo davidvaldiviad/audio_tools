@@ -36,8 +36,7 @@ def normalize(array):
         Args:
             array (np.ndarray): array to normalize, sorted.
     """
-
-    return (array - array[0]) / array[-1]
+    return (array - array[0]) / (array[-1] - array[0])
 
 def parse_args(parser, *args):
     """

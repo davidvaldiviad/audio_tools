@@ -2,3 +2,4 @@
 .DS_Store
 src/audio_tools/__pycache__/*
 src/audio_tools/__pycache__/
+src/audio_tools.egg-info/

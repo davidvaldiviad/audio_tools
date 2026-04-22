@@ -47,6 +47,8 @@ def parse_args(parser, *args):
             parser (function): parser function.
             *args            : list of arguments to parse.
     """
+    if len(args) == 1:
+        return parser(args[0])
     res = []
     for arg in args:
         res.append(parser(arg))

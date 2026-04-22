@@ -1,0 +1,6 @@
+numpy
+pot
+matplotlib
+scipy
+librosa
+ipywidgets

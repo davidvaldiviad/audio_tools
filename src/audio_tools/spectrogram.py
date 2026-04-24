@@ -18,16 +18,18 @@ class Spectrogram:
                  window_size_s=None,
                  hop_size_s=None,
                  window=None,
-                 real=True):
-        self.signal        = signal
-        self.window_size   = window_size
-        self.hop_size      = hop_size
-        self.nfft          = nfft
-        self.sr            = sr
-        self.window_size_s = window_size_s
-        self.hop_size_s    = hop_size_s
-        self.window        = window
-        self.real          = real
+                 real=True,
+                 normalize_window=False):
+        self.signal           = signal
+        self.window_size      = window_size
+        self.hop_size         = hop_size
+        self.nfft             = nfft
+        self.sr               = sr
+        self.window_size_s    = window_size_s
+        self.hop_size_s       = hop_size_s
+        self.window           = window
+        self.real             = real
+        self.normalize_window = normalize_window
 
         if self.window_size and self.sr:
             self.window_size_s = time_at_sample(self.sr, self.window_size)
@@ -38,6 +40,8 @@ class Spectrogram:
 
         if self.window is None:
             self.window = hann(self.window_size)
+        if self.normalize_window:
+            self.window /= (self.window**2).sum()**.5
 
         if self.hop_size is None and self.hop_size_s is None:
             self.hop_size = self.window_size // 2

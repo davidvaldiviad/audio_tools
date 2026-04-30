@@ -38,6 +38,10 @@ class Spectrogram:
             self.window_size_s = time_at_sample(self.sr, self.window_size)
         elif self.window_size_s and self.sr:
             self.window_size = sample_at_time(self.sr, self.window_size_s)
+        if self.window is not None:
+            self.window_size = len(self.window)
+            if self.sr is not None:
+                self.window_size_s = time_at_sample(self.sr, self.window_size)
 
         assert not (self.window_size is None and self.window_size_s is None), "Must provide window size!"
         assert not (self.window_size_s is not None and self.sr is None), "Must provide sample rate if window size in seconds!"

@@ -1,7 +1,7 @@
 import numpy as np
 import ipywidgets
 
-def generate_toy_signal(sr=1000, f1=100, f2=120, duration=.5, times=[.05, .3, .32, .45]):
+def generate_toy_signal(sr=1000, f1=100, f2=120, duration=.5, times=[.05, .3, .32, .45], return_times=False):
     """
         Generate toy signal used in Fig. 1.
 
@@ -27,7 +27,10 @@ def generate_toy_signal(sr=1000, f1=100, f2=120, duration=.5, times=[.05, .3, .3
     signal[s1:s2] += .2 * np.sin(2 * np.pi * f2 * t[s1:s2])
     signal[s3:s4] += .2 * np.sin(2 * np.pi * f1 * t[s3:s4])
 
-    return t, signal
+    if return_times:
+        return t, signal
+
+    return signal
 
 def idx_at_value(array, *values):
     """

@@ -31,21 +31,26 @@ class Spectrogram:
         self.real             = real
         self.normalize_window = normalize_window
 
+
+        if self.window_size:
+            assert type(self.window_size) == int, "Window size must be an integer!"
         if self.window_size and self.sr:
             self.window_size_s = time_at_sample(self.sr, self.window_size)
         elif self.window_size_s and self.sr:
             self.window_size = sample_at_time(self.sr, self.window_size_s)
 
-        assert self.window_size is not None, "Must provide window size!"
+        assert not (self.window_size is None and self.window_size_s is None), "Must provide window size!"
+        assert not (self.window_size_s is not None and self.sr is None), "Must provide sample rate if window size in seconds!"
 
         if self.window is None:
             self.window = hann(self.window_size)
         if self.normalize_window:
             self.window /= (self.window**2).sum()**.5
 
+        if self.hop_size:
+            assert type(self.hop_size) == int, "Hop size must be an integer!"
         if self.hop_size is None and self.hop_size_s is None:
             self.hop_size = self.window_size // 2
-
         if self.hop_size and self.sr:
             self.hop_size_s = time_at_sample(self.sr, self.hop_size)
         elif self.hop_size_s and self.sr:
@@ -90,7 +95,7 @@ class Spectrogram:
 
     def stft(self):
         segments = self.segment_signal().T
-        spectrum = np.fft.fft(segments, self.nfft, axis=0)
+        spectrum = np.fft.fft(segments, self.nfft, axis=0) # time invariant
         if self.real:
             return spectrum[:self.nfft // 2 + 1, :]
         return spectrum

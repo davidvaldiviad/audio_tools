@@ -85,19 +85,19 @@ def display_spectrogram(spec,
     has_axis = f_bins is not None and t_frames is not None # can only filter if frequency/time axis values given.
     if has_axis:
         if low_f:
-            idx = idx_at_value(low_f, f_bins)
+            idx = idx_at_value(f_bins, low_f)
             f_bins = f_bins[idx:]
             spec = spec[idx:, :]
         if high_f:
-            idx = idx_at_value(high_f, f_bins)
+            idx = idx_at_value(f_bins, high_f)
             f_bins = f_bins[:idx]
             spec = spec[:idx, :]
         if low_t:
-            idx = idx_at_value(low_t, t_frames)
+            idx = idx_at_value(t_frames, low_t)
             t_frames = t_frames[idx:]
             spec = spec[:, idx:]
         if high_t:
-            idx = idx_at_value(high_t, t_frames)
+            idx = idx_at_value(t_frames, high_t)
             t_frames = t_frames[:idx]
             spec = spec[:, :idx]
         
